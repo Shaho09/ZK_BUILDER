@@ -1,0 +1,149 @@
+
+name: ZK UPLOADER
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Uploading ZK ROMs
+        run: |
+          cd "$GITHUB_WORKSPACE"
+          sudo timedatectl set-timezone UTC
+          sudo apt-get update > /dev/null 2>&1
+          sudo apt-get install -y python3 python-is-python3 python3-pip aria2 > /dev/null 2>&1
+          pip install google-api-python-client google-auth-httplib2 google-auth-oauthlib
+          export ZK_HOME="/home/runner/work/ZK_AUTO_BUILD/ZK_AUTO_BUILD"
+          mkdir -p ~/.ssh
+          echo "${{ secrets.PRIVATE_REPO_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan github.com >> ~/.ssh/known_hosts 2>/dev/null
+          git clone -b eu --depth=1 git@github.com:zuri1503/ZK_AUTO_BUILD.git "$ZK_HOME"
+          cp -rf "$ZK_HOME/tools/token.pickle" "$GITHUB_WORKSPACE"
+          cp -rf "$ZK_HOME/tools/unpack.py" "$GITHUB_WORKSPACE"
+          sudo rm -rf "$ZK_HOME"
+          OS3_link="
+          ZKOS_RODING_OS3.0.7.0.WOJMIXM_260223.zip
+          ZKOS_ZIRCON_OS3.0.5.0.WNOCNXM_260223.zip
+          ZKOS_CREEK_OS3.0.6.0.WBOMIXM_260223.zip
+          ZKOS_CUPID_OS3.0.2.0.VLCCNXM_260222.zip
+          ZKOS_THOR_OS3.0.2.0.VLACNXM_260222.zip
+          ZKOS_ZEUS_OS3.0.2.0.VLBCNXM_260222.zip
+          ZKOS_UNICORN_OS3.0.2.0.VLECNXM_260222.zip
+          ZKOS_SOCRATES_OS3.0.4.0.VMKCNXM_260222.zip
+          ZKOS_MAYFLY_OS3.0.2.0.VLTCNXM_260222.zip
+          ZKOS_XUANYUAN_OS3.0.8.0.WOACNXM_260222.zip
+          ZKOS_SHENNONG_OS3.0.8.0.WNBCNXM_260222.zip
+          ZKOS_DADA_OS3.0.7.0.WOCCNXM_260222.zip
+          ZKOS_DITING_OS3.0.1.0.VLFCNXM_260222.zip
+          ZKOS_MIRO_OS3.0.5.0.WOMCNXM_260222.zip
+          ZKOS_MYRON_OS3.0.23.0.WPMCNXM_260222.zip
+          ZKOS_ANNIBALE_OS3.0.24.0.WPKCNXM_260222.zip
+          ZKOS_PUDDING_OS3.0.44.0.WPCCNXM_260222.zip
+          ZKOS_HAOTIAN_OS3.0.7.0.WOBCNXM_260222.zip
+          ZKOS_PANDORA_OS3.0.45.0.WBLCNXM_260222.zip
+          ZKOS_AURORA_OS3.0.7.0.WNACNXM_260222.zip
+          ZKOS_POPSICLE_OS3.0.45.0.WPBCNXM_260222.zip
+          ZKOS_ONYX_OS3.0.11.0.WOLCNXM_260222.zip
+          ZKOS_ISHTAR_OS3.0.4.0.WMACNXM_260222.zip
+          ZKOS_VERMEER_OS3.0.9.0.WNKCNXM_260222.zip
+          ZKOS_HOUJI_OS3.0.7.0.WNCCNXM_260222.zip
+          ZKOS_MANET_OS3.0.9.0.WNMCNXM_260222.zip
+          ZKOS_AMETHYST_OS3.0.4.0.WOPCNXM_260222.zip
+          ZKOS_NUWA_OS3.0.4.0.WMBCNXM_260222.zip
+          ZKOS_MONDRIAN_OS3.0.5.0.VMNCNXM_260222.zip
+          ZKOS_MIRO_OS3.0.6.0.WOMCNXM_260222.zip
+          ZKOS_ZORN_OS3.0.9.0.WOKCNXM_260222.zip
+          ZKOS_PERIDOT_OS3.0.7.0.WNPCNXM_260222.zip
+          ZKOS_GARNET_OS3.0.6.0.WNRCNXM_260222.zip
+          ZKOS_FUXI_OS3.0.3.0.WMCCNXM_260222.zip
+          ZKOS_MARBLE_OS3.0.1.0.VMRCNXM_260222.zip"
+          OS2_link="
+          ZKOS_ZIRCON_OS2.0.2.0.VNOCNXM_260223.zip
+          ZKOS_MIRO_OS2.0.206.0.VOMCNXM_260222.zip
+          ZKOS_DADA_OS2.0.216.0.VOCCNXM_260222.zip
+          ZKOS_XUANYUAN_OS2.0.217.0.VOACNXM_260222.zip
+          ZKOS_HAOTIAN_OS2.0.216.0.VOBCNXM_260222.zip
+          ZKOS_HOUJI_OS2.0.215.0.VNCCNXM_260222.zip
+          ZKOS_VERMEER_OS2.0.217.0.VNKCNXM_260222.zip
+          ZKOS_ZORN_OS2.0.216.0.VOKCNXM_260222.zip
+          ZKOS_AURORA_OS2.0.213.0.VNACNXM_260222.zip
+          ZKOS_SKY_OS2.0.205.0.VMWCNXM_260222.zip
+          ZKOS_MANET_OS2.0.208.0.VNMCNXM_260222.zip
+          ZKOS_SHENNONG_OS2.0.222.0.VNBCNXM_260222.zip
+          ZKOS_FUXI_OS2.0.215.0.VMCCNXM_260222.zip
+          ZKOS_PERIDOT_OS2.0.207.0.VNPCNXM_260222.zip
+          ZKOS_ONYX_OS2.0.216.0.VOLCNXM_260222.zip
+          ZKOS_ISHTAR_OS2.0.210.0.VMACNXM_260222.zip
+          ZKOS_GARNET_OS2.0.209.0.VNRCNXM_260222.zip
+          ZKOS_NUWA_OS2.0.219.0.VMBCNXM_260222.zip
+          ZKOS_AMETHYST_OS2.0.211.0.VOPCNXM_260222.zip
+          ZKOS_MONDRIAN_OS2.0.224.0.VMNCNXM_260222.zip
+          ZKOS_THOR_OS2.0.212.0.VLACNXM_260222.zip
+          ZKOS_ZEUS_OS2.0.214.0.VLBCNXM_260222.zip
+          ZKOS_CUPID_OS2.0.213.0.VLCCNXM_260222.zip
+          ZKOS_SOCRATES_OS2.0.212.0.VMKCNXM_260222.zip
+          ZKOS_MAYFLY_OS2.0.209.0.VLTCNXM_260222.zip
+          ZKOS_UNICORN_OS2.0.211.0.VLECNXM_260222.zip
+          ZKOS_DITING_OS2.0.211.0.VLFCNXM_260222.zip
+          ZKOS_MARBLE_OS2.0.215.0.VMRCNXM_260222.zip
+          ZKOS_TOPAZ_OS2.0.203.0.VMGMIXM_260222.zip
+          ZKOS_ZIYIG_OS2.0.206.0.VLLMIXM_260222.zip
+          ZKOS_SAPPHIREN_OS2.0.208.0.VNHMIXM_260222.zip"
+          UI14_link="
+          ZKUI_ISHTAR_V14.0.20.0.TMACNXM_260223.zip
+          ZKUI_DITING_V14.0.11.0.TLFCNXM_260223.zip
+          ZKUI_NUWA_V14.0.28.0.TMBCNXM_260223.zip
+          ZKUI_SOCRATES_V14.0.25.0.TMKCNXM_260223.zip
+          ZKUI_LISA_V14.0.13.0.TKOCNXM_260223.zip
+          ZKUI_ODIN_V14.0.8.0.TKMCNXM_260223.zip
+          ZKUI_FUXI_V14.0.31.0.TMCCNXM_260223.zip
+          ZKUI_ALIOTH_V14.0.8.0.TKHCNXM_260223_RW.zip
+          ZKUI_UNICORN_V14.0.11.0.TLECNXM_260223.zip
+          ZKUI_MONDRIAN_V14.0.28.0.TMNCNXM_260223.zip
+          ZKUI_XMCIVI_V14.0.6.0.TKVCNXM_260223.zip
+          ZKUI_TAOYAO_V14.0.8.0.TLIMIXM_260223.zip
+          ZKUI_THYME_V14.0.6.0.TGACNXM_260223_RW.zip
+          ZKUI_TOPAZ_V14.0.8.0.TMGMIXM_260223.zip
+          ZKUI_TAPAS_V14.0.14.0.TMTMIXM_260223.zip
+          ZKUI_INGRES_V14.0.11.0.TLJCNXM_260223.zip
+          ZKUI_THOR_V14.0.15.0.TLACNXM_260223.zip
+          ZKUI_MAYFLY_V14.0.11.0.TLTCNXM_260223.zip
+          ZKUI_PSYCHE_V14.0.11.0.TLDCNXM_260223_RW.zip
+          ZKUI_REDWOOD_V14.0.6.0.TMSCNXM_260223.zip
+          ZKUI_MOONSTONE_V14.0.6.0.TMPMIXM_260223_RW.zip
+          ZKUI_RENOIR_V14.0.12.0.TKICNXM_260223.zip
+          ZKUI_SUNSTONE_V14.0.10.0.TMQCNXM_260223_RW.zip
+          ZKUI_STAR_V14.0.13.0.TKACNXM_260223.zip
+          ZKUI_VEUX_V14.0.5.0.TKCCNXM_260223_RW.zip
+          ZKUI_CUPID_V14.0.10.0.TLCCNXM_260223.zip
+          ZKUI_ZEUS_V14.0.18.0.TLBCNXM_260223.zip
+          ZKUI_ZIYIG_V14.0.6.0.TLLMIXM_260223.zip
+          ZKUI_HAYDN_V14.0.8.0.TKKCNXM_260223.zip
+          ZKUI_GARNET_V14.0.15.0.TNRCNXM_260223.zip
+          ZKUI_VILI_V14.0.5.0.TKDMIXM_260223.zip
+          ZKUI_VENUS_V14.0.11.0.TKBCNXM_260223.zip
+          ZKUI_MUNCH_V14.0.9.0.TLMCNXM_260223_RW.zip
+          ZKUI_SPESN_V14.0.6.0.TGKMIXM_260223_RW.zip
+          ZKUI_SKY_V14.0.8.0.TMWCNXM_260223.zip
+          ZKUI_VEUXG_V14.0.6.0.TKCMIXM_260223_RW.zip
+          ZKUI_MARBLE_V14.0.27.0.TMRCNXM_260223.zip
+          ZKUI_MARBLE_V14.0.27.0.TMRCNXM_260223_RW.zip"
+          cd "$GITHUB_WORKSPACE"
+          for i in $OS3_link; do
+            timeout 9000 aria2c "https://cfhcable.dl.sourceforge.net/project/projectzk/ProjectZK/ZK-EU/ZKOS3.0/${i}?viasf=1" -o "$i" || exit 1
+            python upload.py 1fFNVQDoS4qnOIZP1xyoAiPYGUK2lUUNu "$i" || exit 1
+            rm -rf "$i"
+          done
+          for i in $OS2_link; do
+            timeout 9000 aria2c "https://cfhcable.dl.sourceforge.net/project/projectzk/ProjectZK/ZK-EU/ZKOS2.2/${i}?viasf=1" -o "$i" || exit 1
+            python upload.py 1KV-VovIo3NgZlGNLM0Aj2RwmT3q4mTfy "$i" || exit 1
+            rm -rf "$i"
+          done
+          for i in $UI14_link; do
+            timeout 9000 aria2c "https://cfhcable.dl.sourceforge.net/project/projectzk/ProjectZK/ZK-EU/ZKUI14.0/${i}?viasf=1" -o "$i" || exit 1
+            python upload.py 1a2O_DmmxH6o4szRJaBQjSfYXjYvdlRUO "$i" || exit 1
+            rm -rf "$i"
+          done
