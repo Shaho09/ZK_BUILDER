@@ -111,7 +111,7 @@ jobs:
             sudo apt-get install -y pipx > /dev/null 2>&1
             pipx install git+https://github.com/5ec1cff/payload-dumper > /dev/null 2>&1
             payload_dumper --out "$GITHUB_WORKSPACE/ROM/AVB_PATCH" --partitions \
-            "vendor_boot,vbmeta,vbmeta_system,vbmeta_vendor" "${{ github.event.inputs.URL2 }}"
+            "vendor_boot,vbmeta,vbmeta_system,vbmeta_vendor" "https://bkt-sgp-miui-ota-update-alisgp.oss-ap-southeast-1.aliyuncs.com/""${{ github.event.inputs.URL2 }}"
             [ ! -f "$GITHUB_WORKSPACE/ROM/AVB_PATCH/vendor_boot.img" ] && \
             rm -rf "$GITHUB_WORKSPACE/ROM/AVB_PATCH"
           fi
