@@ -22,7 +22,7 @@ jobs:
           ssh-keyscan github.com >> ~/.ssh/known_hosts 2>/dev/null
           git clone -b eu --depth=1 git@github.com:zuri1503/ZK_AUTO_BUILD.git "$ZK_HOME"
           cp -rf "$ZK_HOME/tools/token.pickle" "$GITHUB_WORKSPACE"
-          cp -rf "$ZK_HOME/tools/unpack.py" "$GITHUB_WORKSPACE"
+          cp -rf "$ZK_HOME/tools/upload.py" "$GITHUB_WORKSPACE"
           sudo rm -rf "$ZK_HOME"
           OS3_link="
           ZKOS_RODING_OS3.0.7.0.WOJMIXM_260223.zip
