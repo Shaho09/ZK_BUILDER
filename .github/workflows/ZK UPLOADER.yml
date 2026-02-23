@@ -137,13 +137,13 @@ jobs:
             #python upload.py 1fFNVQDoS4qnOIZP1xyoAiPYGUK2lUUNu "$i" || exit 1
             #rm -rf "$i"
           #done
-          for i in $OS2_link; do
-            timeout 9000 aria2c "https://cfhcable.dl.sourceforge.net/project/projectzk/ProjectZK/ZK-EU/ZKOS2.2/${i}?viasf=1" -o "$i" || exit 1
-            python upload.py 1KV-VovIo3NgZlGNLM0Aj2RwmT3q4mTfy "$i" || exit 1
-            rm -rf "$i"
-          done
-          #for i in $UI14_link; do
-            #timeout 9000 aria2c "https://cfhcable.dl.sourceforge.net/project/projectzk/ProjectZK/ZK-EU/ZKUI14.0/${i}?viasf=1" -o "$i" || exit 1
-            #python upload.py 1a2O_DmmxH6o4szRJaBQjSfYXjYvdlRUO "$i" || exit 1
+          #for i in $OS2_link; do
+            #timeout 9000 aria2c "https://cfhcable.dl.sourceforge.net/project/projectzk/ProjectZK/ZK-EU/ZKOS2.2/${i}?viasf=1" -o "$i" || exit 1
+            #python upload.py 1KV-VovIo3NgZlGNLM0Aj2RwmT3q4mTfy "$i" || exit 1
             #rm -rf "$i"
           #done
+          for i in $UI14_link; do
+            timeout 9000 aria2c "https://cfhcable.dl.sourceforge.net/project/projectzk/ProjectZK/ZK-EU/ZKUI14.0/${i}?viasf=1" -o "$i" || exit 1
+            python upload.py 1a2O_DmmxH6o4szRJaBQjSfYXjYvdlRUO "$i" || exit 1
+            rm -rf "$i"
+          done
