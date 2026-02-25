@@ -149,14 +149,12 @@ jobs:
           cd "$GITHUB_WORKSPACE"
           export ZK_HOME="/home/runner/work/ZK_AUTO_BUILD/ZK_AUTO_BUILD"
           echo "ZK_HOME=$ZK_HOME" >> $GITHUB_ENV
-          # mkdir -p ~/.ssh
-          # echo "${{ secrets.PRIVATE_REPO_KEY }}" > ~/.ssh/id_ed25519
-          # chmod 600 ~/.ssh/id_ed25519
-          # ssh-keyscan github.com >> ~/.ssh/known_hosts 2>/dev/null
-          git clone -b eu --depth=1 https://github.com/zuri1503/ZK_AUTO_BUILD.git "$ZK_HOME"
+          # Use HTTPS with an automatic token to bypass the "Username" error
+          git clone -b eu --depth=1 https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/zuri1503/ZK_AUTO_BUILD.git "$ZK_HOME"
           mv -f "$GITHUB_WORKSPACE/ROM" "$ZK_HOME/ROM"
           ls "$ZK_HOME/ROM"
           sudo chmod -R +x "$ZK_HOME"
+
           
 
       - name: Build ProjectZK ROM
